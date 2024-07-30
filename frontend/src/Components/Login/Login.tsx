@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import styles from "./Login.module.css";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 type LoginData = {
   email: string;
@@ -21,13 +21,13 @@ const Login = () => {
   );
   const navigate = useNavigate();
 
-    useEffect(() => {
-      const token = secureLocalStorage.getItem("token");
+  useEffect(() => {
+    const token = secureLocalStorage.getItem("token");
 
-      if(token){
-        navigate("/home");
-      }
-    }, []);
+    if (token) {
+      navigate("/home");
+    }
+  }, []);
 
   const handleLogin = useCallback(async () => {
     setError(null);
@@ -93,14 +93,14 @@ const Login = () => {
   );
 
   return (
-    <Container fluid className={styles.MainContainer}>
-      <Row className={`mx-0 my-0 ${styles.MainRow}`}>
+    <Container fluid className={styles.mainContainer}>
+      <Row className={`mx-0 my-0 ${styles.mainRow}`}>
         {/* Form Column */}
         <Col className={styles.loginColumn} lg={6} xs={12}>
-          <div className={styles.MainColumn}>
+          <div className={styles.mainColumn}>
             <h2 className="logoFont">Weyt</h2>
             <h4 className="logoFont mb-5 text-nowrap">The Way To Progress</h4>
-            <h3 className={styles.LoginText}>Log into your account</h3>
+            <h3 className={styles.loginText}>Log into your account</h3>
             <div className={styles.loginFormContainer}>
               <label htmlFor="email">Email address</label>
               <input
@@ -147,19 +147,23 @@ const Login = () => {
             )}
             <button
               className={`${loading ? "opacity-25" : ""} ${
-                styles.SubmitButton
+                styles.submitButton
               } `}
               onClick={handleLogin}
               disabled={loading}
             >
               Login
             </button>
+            <div className={styles.createAccountContainer}>
+              <span>Don't have an account? </span>
+              <NavLink to="/signup">Create Account</NavLink>
+            </div>
           </div>
         </Col>
         <Col className={styles.imageColumn} lg={6}>
           <video
             src="Comp_8.mp4"
-            className={styles.VideoComponent}
+            className={styles.videoComponent}
             autoPlay
             muted
             loop
