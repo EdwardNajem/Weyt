@@ -1,0 +1,6 @@
+@WeytBackend.WebApp_HostAddress = http://localhost:5022
+
+GET {{WeytBackend.WebApp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

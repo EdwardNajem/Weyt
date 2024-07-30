@@ -1,0 +1,115 @@
+.MainContainer {
+  padding: 0 !important;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  overflow: hidden;
+}
+
+.MainRow {
+  height: 100%;
+  width: 100%;
+}
+
+.MainColumn {
+  padding: 1.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  padding-left: 20%;
+  padding-right: 20%;
+}
+
+.loginColumn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--BackgroundColor);
+  width: 100%;
+  gap: 5rem;
+}
+
+.LoginText {
+  text-align: center;
+}
+
+.loginColumn > * {
+  color: var(--TextColor);
+  width: 100%;
+}
+
+.loginFormContainer {
+  margin-bottom: 1rem;
+}
+
+.loginInput {
+  border-color: var(--InputBorderColor) !important;
+  background-color: var(--InputBackground) !important;
+  color: var(--TextColor) !important;
+}
+
+.loginInput:focus,
+.loginInput:active {
+  border-color: var(--MainColor) !important;
+  box-shadow: 0 0 0 0.2rem rgba(181, 40, 212, 0.25) !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--InputBackground) inset !important;
+  -webkit-text-fill-color: var(--TextColor) !important;
+}
+
+.errorInput {
+  border-color: red !important;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.SubmitButton {
+  width: 100%;
+  height: 2.5rem;
+  background-color: var(--ButtonBackground);
+  border: 1px solid var(--ButtonBackground);
+  border-color: var(--ButtonBackground);
+  border-radius: 0.5rem;
+  color: var(--TextColor);
+  margin-top: 1rem;
+  transition: all 0.5s;
+}
+
+.SubmitButton:hover {
+  background-color: var(--ButtonHoverBackground);
+  border-color: var(--ButtonHoverBackground);
+}
+
+.SubmitButton:active {
+  background-color: var(--BackgroundColor);
+}
+
+.imageColumn {
+  background-color: var(--BackgroundColor);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+}
+
+.VideoComponent {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+@media (min-width: 992px) {
+  .imageColumn {
+    display: flex;
+    width: 100%;
+  }
+}

@@ -1,0 +1,50 @@
+:root {
+  --MainColor: #621773;
+  --BackgroundColor: #121212; /* Dark background for the page */
+  --TextColor: #f5f5f5; /* Light text color */
+  --InputBackground: #333; /* Dark background for input fields */
+  --InputBorderColor: #444; /* Dark border color for input fields */
+  --ButtonBackground: #621773; /* Dark purple background for buttons */
+  --ButtonHoverBackground: #4e0b57; /* Darker shade on hover */
+}
+
+/* Global styles */
+body {
+  margin: 0;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--BackgroundColor);
+  color: var(--TextColor);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.logoFont {
+  font-family: "Quicksand";
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Custom styles for input fields */
+input {
+  background-color: var(--InputBackground);
+  border: 1px solid var(--InputBorderColor);
+  color: var(--TextColor);
+}
+
+input:focus {
+  border-color: var(--MainColor);
+  box-shadow: 0 0 0 0.2rem rgba(98, 23, 115, 0.25);
+  outline: none;
+}
