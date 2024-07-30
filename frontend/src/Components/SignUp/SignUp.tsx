@@ -1,8 +1,8 @@
 import React from 'react'
-import styles from "./signup.module.css"
+import styles from "./SignUp.module.css"
 
 
-const SignUp = () => {
+const SignUp: React.FC = () => {
   return (
     <div className={styles.MainContainer}>SignUp</div>
   )

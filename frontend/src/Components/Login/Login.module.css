@@ -63,13 +63,17 @@ input:-webkit-autofill:active {
 }
 
 .errorInput {
-  border-color: red !important;
+  border-color: rgb(255, 0, 0) !important;
 }
 
 .errorMessage {
   color: red;
   font-size: 0.875rem;
   margin-top: 0.25rem;
+}
+
+.disabledButton {
+  color: var(--InputBorderColor);
 }
 
 .SubmitButton {

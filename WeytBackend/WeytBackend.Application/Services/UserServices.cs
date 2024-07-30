@@ -25,10 +25,10 @@ namespace WeytBackend.Application.Services
             string email = login.Email;
             string password = login.Password;
 
-            string hashedPassword = _passwordServices.HashPassword(password);
+            //string hashedPassword = _passwordServices.HashPassword(password);
 
             email = email.ToLower();
-            return await _userRepository.Login(email, hashedPassword);
+            return await _userRepository.Login(email, password);
         }
     }
 }
