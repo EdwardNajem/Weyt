@@ -80,7 +80,7 @@ const Login = () => {
     } catch (error2: any) {
       setError({
         field: "General",
-        message: "Login failed: " + error2.message,
+        message: error2.message,
       });
     }
     setLoading(false);
