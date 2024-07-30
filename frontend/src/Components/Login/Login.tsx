@@ -14,20 +14,19 @@ type LoginData = {
 const Login = () => {
   const emailInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
-  const [loginData, setLoginData] = useState<LoginData>();
   const [loading, setLoading] = useState<boolean>();
   const [error, setError] = useState<{ field: string; message: string } | null>(
     null
   );
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = secureLocalStorage.getItem("token");
+  // useEffect(() => {
+  //   const token = secureLocalStorage.getItem("token");
 
-    if (token) {
-      navigate("/home");
-    }
-  }, []);
+  //   if (token) {
+  //     navigate("/home");
+  //   }
+  // }, []);
 
   const handleLogin = useCallback(async () => {
     setError(null);
@@ -37,7 +36,7 @@ const Login = () => {
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    setLoginData({ email, password });
+    const loginData: LoginData = { email, password };
 
     if (!email) {
       setError({ field: "email", message: "Email is required." });
@@ -59,6 +58,8 @@ const Login = () => {
       setLoading(false);
       return;
     }
+
+    console.log("Login Info: " + loginData);
 
     try {
       const response = await fetch("http://localhost:5022/api/User/login", {

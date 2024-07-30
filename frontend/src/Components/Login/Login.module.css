@@ -25,7 +25,6 @@
   align-items: center;
   justify-content: center;
   background-color: var(--BackgroundColor);
-  width: 100%;
   gap: 5rem;
 }
 

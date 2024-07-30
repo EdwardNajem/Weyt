@@ -32,5 +32,13 @@ namespace WeytBackend.WebApp.Controllers
 
             return Ok(response);
         }
+
+        [HttpPost("signup")]
+        public async Task<IActionResult> Signup(UserSignUpDTO signup)
+        {
+            User user = await _userServices.SignUp(signup);
+
+            return Ok(user);
+        }
     }
 }

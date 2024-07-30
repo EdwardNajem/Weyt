@@ -7,6 +7,8 @@ namespace WeytBackend.Application.Services
     public interface IUserServices
     {
         public Task<User> Login(UserLoginDTO login);
+
+        public Task<User> SignUp(UserSignUpDTO signUp);
     }
 
     public class UserServices : IUserServices
@@ -22,8 +24,20 @@ namespace WeytBackend.Application.Services
 
         public async Task<User> Login(UserLoginDTO login)
         {
-            string email = login.Email;
-            string password = login.Password;
+            string email = login.Email.Trim();
+            string password = login.Password.Trim();
+
+            //string hashedPassword = _passwordServices.HashPassword(password);
+
+            email = email.ToLower();
+            return await _userRepository.Login(email, password);
+        }
+
+        public async Task<User> SignUp(UserLoginDTO signup)
+        {
+            string name  = 
+            string email = signup.Email.Trim();
+            string password = signup.Password.Trim();
 
             //string hashedPassword = _passwordServices.HashPassword(password);
 
