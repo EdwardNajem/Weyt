@@ -1,4 +1,5 @@
-﻿using WeytBackend.Application.DTO;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using WeytBackend.Application.DTO;
 using WeytBackend.Domain.Entities;
 using WeytBackend.Infrastructure.Repository;
 
@@ -6,9 +7,8 @@ namespace WeytBackend.Application.Services
 {
     public interface IUserServices
     {
-        public Task<User> Login(UserLoginDTO login);
-
-        public Task<User> SignUp(UserSignUpDTO signUp);
+        public Task<User?> Login(UserLoginDTO login);
+        public Task<User?> SignUp(UserSignUpDTO signUp);
     }
 
     public class UserServices : IUserServices
@@ -22,27 +22,43 @@ namespace WeytBackend.Application.Services
             _passwordServices = passwordServices;
         }
 
-        public async Task<User> Login(UserLoginDTO login)
+        public async Task<User?> Login(UserLoginDTO login)
         {
             string email = login.Email.Trim();
             string password = login.Password.Trim();
 
-            //string hashedPassword = _passwordServices.HashPassword(password);
-
             email = email.ToLower();
-            return await _userRepository.Login(email, password);
+            
+            User user = await _userRepository.Login(email);
+
+            Boolean hashedPassword = _passwordServices.ComparePassword(password , user.Password);
+
+            if (hashedPassword == true)
+                return user;
+            else
+                return null;
         }
 
-        public async Task<User> SignUp(UserLoginDTO signup)
+        public async Task<User?> SignUp(UserSignUpDTO signup)
         {
-            string name  = 
+            string name = signup.Name.Trim();
             string email = signup.Email.Trim();
             string password = signup.Password.Trim();
 
-            //string hashedPassword = _passwordServices.HashPassword(password);
-
             email = email.ToLower();
-            return await _userRepository.Login(email, password);
+
+            string hashedPassword = _passwordServices.HashPassword(password);
+
+            var users = await _userRepository.GetAllUsers();
+
+            var user = users.FirstOrDefault(user => user.Email == email);
+
+            if (user == null)
+            {
+                await _userRepository.SignUp(name, email, hashedPassword);
+                return null;
+            }
+            return user;
         }
     }
 }
