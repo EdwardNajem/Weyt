@@ -23,17 +23,18 @@ const SignUp = () => {
   );
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const token = secureLocalStorage.getItem("token");
+  useEffect(() => {
+    const token = secureLocalStorage.getItem("token");
 
-  //   if (token) {
-  //     navigate("/home");
-  //   }
-  // }, []);
+    if (token) {
+      navigate("/home");
+    }
+  }, []);
 
   const handleSignUp = useCallback(async () => {
     setError(null);
     setLoading(true);
+    
     const name = nameInputRef.current?.value || "";
     const email = emailInputRef.current?.value || "";
     const password = passwordInputRef.current?.value || "";
@@ -43,7 +44,9 @@ const SignUp = () => {
 
     const signUpData: SignUpData = { name, email, password };
 
-    if (!name) {
+    console.log(name);
+
+    if (name === "" || !name) {
       setError({ field: "name", message: "Name is required." });
       setLoading(false);
       return;
@@ -78,28 +81,28 @@ const SignUp = () => {
 
     console.log("SignUp Info:", signUpData);
 
-    // try {
-    //   const response = await fetch("http://localhost:5022/api/User/SignUp", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(signUpData),
-    //   });
+    try {
+      const response = await fetch("http://localhost:5022/api/User/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(signUpData),
+      });
 
-    //   if (!response.ok) {
-    //     throw new Error("SignUp failed");
-    //   }
+      if (!response.ok) {
+        throw new Error("SignUp failed");
+      }
 
-    //   const data = await response.json();
-    //   console.log("SignUp successful", data);
-    //   secureLocalStorage.setItem("token", data.token);
-    // } catch (error: any) {
-    //   setError({
-    //     field: "General",
-    //     message: "SignUp failed: " + error.message,
-    //   });
-    // }
+      const data = await response.json();
+      console.log("SignUp successful", data);
+      navigate("/login");
+    } catch (error: any) {
+      setError({
+        field: "General",
+        message: "SignUp failed: " + error.message,
+      });
+    }
 
     setLoading(false);
   }, []);
@@ -187,14 +190,14 @@ const SignUp = () => {
                   error?.field === "confirmPassword" ? styles.errorInput : ""
                 } ${loading ? "opacity-25" : ""}`}
                 id="confirmPassword"
-                ref={nameInputRef}
+                ref={confirmPasswordInputRef}
                 aria-invalid={error?.field === "password2"}
                 aria-describedby={
                   error?.field === "password2" ? "password2Error" : ""
                 }
                 disabled={loading}
               />
-              {error?.field === "confirmPassword" && (
+              {error?.field === "password2" && (
                 <div id="password2Error" className={styles.errorMessage}>
                   {error.message}
                 </div>
@@ -210,7 +213,7 @@ const SignUp = () => {
               onClick={handleSignUp}
               disabled={loading}
             >
-              SignUp
+              Create Account
             </button>
             <div className={styles.createAccountContainer}>
               <span>Already have an account? </span>

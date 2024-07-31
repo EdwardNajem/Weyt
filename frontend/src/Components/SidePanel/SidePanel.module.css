@@ -1,0 +1,21 @@
+.mainColumn {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--BackgroundColor);
+  gap: 1rem;
+}
+
+.logoDisplayRow {
+  position: absolute;
+  color: var(--TextColor);
+  top: 1rem;
+  font-size: 2rem;
+}
+
+.itemRow {
+  color: var(--TextColor);
+  display: flex;
+  flex-direction: row;
+}

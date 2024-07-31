@@ -1,0 +1,17 @@
+.mainContainer {
+  padding: 0 !important;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  overflow: hidden;
+}
+
+.mainRow {
+  height: 100%;
+  width: 100%;
+}
+
+.mainColumn {
+  background-color: var(--InputBackground);
+}

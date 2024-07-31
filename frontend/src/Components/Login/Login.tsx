@@ -20,13 +20,13 @@ const Login = () => {
   );
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const token = secureLocalStorage.getItem("token");
+  useEffect(() => {
+    const token = secureLocalStorage.getItem("token");
 
-  //   if (token) {
-  //     navigate("/home");
-  //   }
-  // }, []);
+    if (token) {
+      navigate("/home");
+    }
+  }, []);
 
   const handleLogin = useCallback(async () => {
     setError(null);
@@ -36,7 +36,7 @@ const Login = () => {
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    const loginData: LoginData = { email, password };
+    const loginDataRequest: LoginData = { email, password };
 
     if (!email) {
       setError({ field: "email", message: "Email is required." });
@@ -59,7 +59,7 @@ const Login = () => {
       return;
     }
 
-    console.log("Login Info: " + loginData);
+    console.log("Login Info: " + JSON.stringify(loginDataRequest));
 
     try {
       const response = await fetch("http://localhost:5022/api/User/login", {
@@ -67,7 +67,7 @@ const Login = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(loginData),
+        body: JSON.stringify(loginDataRequest),
       });
 
       if (!response.ok) {
@@ -75,12 +75,13 @@ const Login = () => {
       }
 
       const data = await response.json();
-      console.log("Login successful", data);
       secureLocalStorage.setItem("token", data.token);
+      console.log("Login successful", data);
+      navigate("/home");
     } catch (error2: any) {
       setError({
         field: "General",
-        message: error2.message,
+        message: "Login failed: " + error2.message,
       });
     }
     setLoading(false);
