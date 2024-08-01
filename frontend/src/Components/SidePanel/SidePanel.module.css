@@ -33,6 +33,11 @@
 
 .iconText:hover {
   color: var(--ButtonBackground);
+  cursor: pointer;
+}
+
+.iconText:active {
+  color: var(--ButtonHoverBackground);
 }
 
 .iconText h5 {

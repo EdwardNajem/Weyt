@@ -12,6 +12,8 @@ import Login from "./Components/Login/Login";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SignUp from "./Components/SignUp/SignUp";
 import Home from "./Components/Home/Home";
+import Landing from "./Components/Landing/Landing";
+import Workout from "./Components/Workout/Workout";
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -26,7 +28,7 @@ const App: React.FC = () => {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="home" element={<Home />} />
+        <Route path="/home/*" element={<Landing />} />
       </Routes>
     </Router>
   );

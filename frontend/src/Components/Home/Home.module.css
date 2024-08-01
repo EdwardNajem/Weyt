@@ -1,17 +1,11 @@
-.mainContainer {
-  padding: 0 !important;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  margin: 0;
-  overflow: hidden;
-}
-
-.mainRow {
-  height: 100%;
-  width: 100%;
-}
-
 .mainColumn {
-  background-color: var(--InputBackground);
+  height: 100vh;
+  width: 100%;
+  background-color: var(--BackgroundColor);
+}
+
+.title {
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
 }
