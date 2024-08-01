@@ -7,10 +7,10 @@ const Home: React.FC = () => {
   return (
     <Container className={styles.mainContainer}>
       <Row className={styles.mainRow}>
-        {/* Side Panel */}
         <SidePanel />
-        {/* The Pages */}
-        <Col xs={10} className={styles.mainColumn}>Home Page</Col>
+        <Col xs={10} className={styles.mainColumn}>
+          Home Page
+        </Col>
       </Row>
     </Container>
   );

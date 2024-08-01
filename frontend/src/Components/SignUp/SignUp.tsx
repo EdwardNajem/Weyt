@@ -34,7 +34,7 @@ const SignUp = () => {
   const handleSignUp = useCallback(async () => {
     setError(null);
     setLoading(true);
-    
+
     const name = nameInputRef.current?.value || "";
     const email = emailInputRef.current?.value || "";
     const password = passwordInputRef.current?.value || "";
