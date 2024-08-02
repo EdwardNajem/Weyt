@@ -1,4 +1,4 @@
-.MainContainer {
+.mainContainer {
   padding: 0 !important;
   height: 100vh;
   display: flex;
@@ -7,12 +7,12 @@
   overflow: hidden;
 }
 
-.MainRow {
+.mainRow {
   height: 100%;
   width: 100%;
 }
 
-.MainColumn {
+.mainColumn {
   padding: 1.5rem;
   box-sizing: border-box;
   width: 100%;
@@ -25,11 +25,10 @@
   align-items: center;
   justify-content: center;
   background-color: var(--BackgroundColor);
-  width: 100%;
   gap: 5rem;
 }
 
-.LoginText {
+.loginText {
   text-align: center;
 }
 
@@ -63,7 +62,7 @@ input:-webkit-autofill:active {
 }
 
 .errorInput {
-  border-color: red !important;
+  border-color: rgb(255, 0, 0) !important;
 }
 
 .errorMessage {
@@ -72,7 +71,7 @@ input:-webkit-autofill:active {
   margin-top: 0.25rem;
 }
 
-.SubmitButton {
+.submitButton {
   width: 100%;
   height: 2.5rem;
   background-color: var(--ButtonBackground);
@@ -84,12 +83,12 @@ input:-webkit-autofill:active {
   transition: all 0.5s;
 }
 
-.SubmitButton:hover {
+.submitButton:hover {
   background-color: var(--ButtonHoverBackground);
   border-color: var(--ButtonHoverBackground);
 }
 
-.SubmitButton:active {
+.submitButton:active {
   background-color: var(--BackgroundColor);
 }
 
@@ -101,10 +100,15 @@ input:-webkit-autofill:active {
   padding: 0 !important;
 }
 
-.VideoComponent {
+.videoComponent {
   width: 100%;
   height: 100%;
   object-fit: fill;
+}
+
+.createAccountContainer {
+  margin-top: 1rem;
+  text-decoration: none;
 }
 
 @media (min-width: 992px) {

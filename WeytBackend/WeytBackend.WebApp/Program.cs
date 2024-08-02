@@ -83,6 +83,7 @@ namespace WeytBackend.WebApp
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseCors();
 
             app.MapControllers();
 
