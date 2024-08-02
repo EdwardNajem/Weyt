@@ -10,13 +10,13 @@ namespace WeytBackend.Application.Services
     public interface IPasswordServices
     {
         public string HashPassword(string inputPassword);
-        public string ComparePassword(string inputPassword, string actualPassword);
+        public Boolean ComparePassword(string inputPassword, string actualPassword);
     }
     public class PasswordServices : IPasswordServices
     {
-        public string ComparePassword(string inputPassword, string actualPassword)
+        public Boolean ComparePassword(string inputPassword, string actualPassword)
         {
-            throw new NotImplementedException();
+            return BCrypt.Net.BCrypt.Verify(inputPassword, actualPassword);
         }
 
         public string HashPassword(string inputPassword)

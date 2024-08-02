@@ -30,10 +30,11 @@ code {
 }
 
 .logoFont {
-  font-family: "Quicksand";
-  font-optical-sizing: auto;
-  font-weight: 700;
-  font-style: normal;
+  font-family: "Quicksand" !important;
+  font-optical-sizing: auto !important;
+  font-weight: 700 !important;
+  font-style: normal !important;
+  color: var(--TextColor) !important;
 }
 
 /* Custom styles for input fields */
