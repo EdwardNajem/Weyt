@@ -28,8 +28,8 @@ namespace WeytBackend.Application.Services
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name, userLogin.Email),
-                new Claim(ClaimTypes.Role, "user")
+                new Claim("Name", userLogin.Email),
+                new Claim("Role", "user")
             };
 
             Console.WriteLine(claims);

@@ -1,0 +1,50 @@
+.mainColumn {
+  height: 100vh;
+  width: 100%;
+  background-color: var(--BackgroundColor);
+}
+
+.title {
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  user-select: none;
+}
+
+.subTitleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.subTitleRow > * {
+  width: 0%;
+}
+
+.subTitletext {
+  margin-left: 2rem;
+  font-size: 1.5rem;
+  user-select: none;
+}
+
+.subTitleButton {
+  width: fit-content;
+  height: 2.5rem;
+  background-color: var(--ButtonBackground);
+  border: 1px solid var(--ButtonBackground);
+  border-color: var(--ButtonBackground);
+  border-radius: 0.5rem;
+  color: var(--TextColor);
+  margin-top: 1rem;
+  transition: all 0.5s;
+}
+
+.subTitleButton:hover {
+  background-color: var(--ButtonHoverBackground);
+  border-color: var(--ButtonHoverBackground);
+}
+
+.subTitleButton:active {
+  background-color: var(--BackgroundColor);
+}

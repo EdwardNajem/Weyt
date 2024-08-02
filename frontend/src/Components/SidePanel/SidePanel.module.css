@@ -1,0 +1,48 @@
+.mainColumn {
+  display: flex;
+  /* align-items: center; */
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--BackgroundColor);
+  gap: 1.5rem;
+}
+
+.mainColumn > * {
+  margin-left: 1rem;
+}
+
+.logoDisplayRow {
+  position: absolute;
+  color: var(--TextColor);
+  top: 1rem;
+  font-size: 2rem;
+}
+
+.itemRow {
+  color: var(--TextColor);
+  display: flex;
+  flex-direction: row;
+}
+
+.iconText {
+  display: flex;
+  align-items: center;
+  transition: all 0.5s ease;
+  user-select: none;
+}
+
+.iconText:hover {
+  color: var(--ButtonBackground);
+  cursor: pointer;
+}
+
+.iconText:active {
+  color: var(--ButtonHoverBackground);
+}
+
+.iconText h5 {
+  margin-left: 0.5rem;
+  margin-bottom: 0rem;
+  text-wrap: nowrap;
+  user-select: none;
+}
