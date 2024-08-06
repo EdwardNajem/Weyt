@@ -28,9 +28,16 @@ namespace WeytBackend.WebApp
                 return new UserRepository(configuration.GetConnectionString("DefaultConnection"));
             });
 
+            builder.Services.AddScoped<IWorkoutRepository>(sp =>
+            {
+                var configuration = sp.GetRequiredService<IConfiguration>();
+                return new WorkoutRepository(configuration.GetConnectionString("DefaultConnection"));
+            });
+
             builder.Services.AddScoped<IUserServices, UserServices>();
             builder.Services.AddScoped<ITokenServies, TokenServices>();
             builder.Services.AddScoped<IPasswordServices, PasswordServices>();
+            builder.Services.AddScoped<IWorkoutServices, WorkoutServices>();
 
             builder.Services.AddAuthentication(x =>
             {
