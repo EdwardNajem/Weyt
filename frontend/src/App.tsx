@@ -5,16 +5,14 @@ import {
   Route,
   Routes,
   Navigate,
+  useNavigate,
 } from "react-router-dom";
 
 import Login from "./Components/Login/Login";
+import SignUp from "./Components/SignUp/SignUp";
+import Landing from "./Components/Landing/Landing";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import SignUp from "./Components/SignUp/SignUp";
-import Home from "./Components/Home/Home";
-import Landing from "./Components/Landing/Landing";
-import Workout from "./Components/Workout/Workout";
-
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
 

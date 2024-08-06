@@ -13,7 +13,7 @@ const Landing: React.FC = () => {
           <SidePanel />
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/workout" element={<Workout />} />
+              <Route path="/workout/*" element={<Workout />} />
             </Routes>
         </Row>
       </Container>

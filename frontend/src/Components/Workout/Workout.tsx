@@ -1,16 +1,16 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import styles from "./Workout.module.css";
+import { Routes, Route } from "react-router-dom";
+import WorkoutHome from "./WorkoutHome/WorkoutHome";
+import CreateRoutine from "./WorkoutRoutine/CreateRoutine/CreateRoutine";
+import AddExercise from "./WorkoutRoutine/AddExercise/AddExercise";
 
 const Workout: React.FC = () => {
   return (
-    <Col className={styles.mainColumn}>
-      <div className={`logoFont ${styles.title}`}>Workout</div>
-      <Row className={styles.subTitleRow}>
-        <div className={`logoFont ${styles.subTitletext}`}>Routines</div>
-        <button className={styles.subTitleButton}> New Routine</button>
-      </Row>
-    </Col>
+    <Routes>
+      <Route path="/" element={<WorkoutHome />} />
+      <Route path="/routine/create" element={<CreateRoutine />} />
+      <Route path="/routine/addexercise" element={<AddExercise />} />
+    </Routes>
   );
 };
 

@@ -1,0 +1,28 @@
+.mainContainer {
+}
+
+.heaader {
+  display: flex;
+  align-items: center;
+  background-color: var(--InputBackground);
+  padding: 1rem;
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+}
+
+.image {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 10rem;
+  margin-right: 10px;
+}
+
+.name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--TextColor);
+}
+
+.muscle {
+  color: var(--TextColor);
+}
