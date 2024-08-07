@@ -7,7 +7,7 @@ const WorkoutHome: React.FC = () => {
   const navigate = useNavigate();
 
   const handleNavigateCreateRountine = useCallback(() => {
-    navigate("/home/workout/routine/create");
+    navigate("/home/workout/routine/addexercise");
   }, []);
 
   return (

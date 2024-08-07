@@ -1,7 +1,8 @@
 .mainContainer {
+  margin-bottom: 2rem;
 }
 
-.heaader {
+.header {
   display: flex;
   align-items: center;
   background-color: var(--InputBackground);
@@ -25,4 +26,96 @@
 
 .muscle {
   color: var(--TextColor);
+}
+
+.delete {
+  color: var(--TextColor);
+  margin: 0 1rem 0 auto;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.delete:hover {
+  color: var(--ButtonBackground);
+}
+
+.delete:active {
+  color: var(--ButtonHoverBackground);
+}
+
+.setHeader {
+  background-color: var(--InputBorderColor);
+  color: var(--TextColor);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem;
+  position: relative;
+  gap: 20%;
+}
+
+.setHeader > * {
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.addButton {
+  margin-left: auto;
+  padding: 0.4rem 0.8rem;
+  background-color: var(--ButtonBackground);
+  color: var(--ButtonTextColor);
+  border: 2px solid var(--ButtonBackground);
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.addButton:hover {
+  background-color: var(--ButtonHoverBackground);
+  border: 2px solid var(--ButtonHoverBackground);
+}
+
+.addButton:active {
+  background-color: var(--InputBorderColor);
+}
+
+.setItem {
+  border-bottom: 1px solid var(--TextColor);
+  font-size: 1.2rem;
+  color: var(--TextColor);
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem;
+  gap: 20%;
+}
+
+.deleteSet {
+  color: var(--TextColor);
+  margin: 0 1rem 0 auto;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.deleteSet:hover {
+  color: var(--ButtonBackground);
+}
+
+.deleteSet:active {
+  color: var(--ButtonHoverBackground);
+}
+
+.inputSet {
+  background-color: var(--BackgroundColor);
+  border: none;
+  width: 4rem;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }

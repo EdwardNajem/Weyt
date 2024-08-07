@@ -1,7 +1,9 @@
 .mainColumn {
-  height: 100vh;
+  max-height: 100vh;
   width: 100%;
   background-color: var(--BackgroundColor);
+  overflow-y: auto;
+  padding-bottom: 4rem;
 }
 
 .breadCrumbContainer {
@@ -110,3 +112,12 @@ input:-webkit-autofill:active {
   color: var(--TextColor);
   margin-top: 1rem;
 }
+
+/* .selectedExercisesList {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.selectedExercisesList::-webkit-scrollbar {
+  display: none;
+} */

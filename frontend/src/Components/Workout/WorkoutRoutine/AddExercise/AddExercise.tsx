@@ -1,7 +1,7 @@
 import { Breadcrumb, Col, Row, FormControl } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./AddExercise.module.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import instance from "../../../../Helper/axiosinstance";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
@@ -52,11 +52,17 @@ const AddExercise: React.FC = () => {
     setSearchQuery(event.target.value);
   };
 
-  const handleNavigateToCreateRoutine = () => {
-    navigate("/home/workout/routine/create", {
-      state: { selectedExercises },
-    });
-  };
+  const handleNavigateToCreateRoutine = useCallback(() => {
+    if (selectedExercises.length > 0) {
+      navigate("/home/workout/routine/create", {
+        state: { selectedExercises },
+      });
+    }
+  }, [selectedExercises]);
+
+  const handleNavigateToWorkout = useCallback(() => {
+    navigate("/home/workout");
+  }, []);
 
   useEffect(() => {
     fetchExercises();
@@ -70,28 +76,23 @@ const AddExercise: React.FC = () => {
     <Col className={styles.mainColumn}>
       <Breadcrumb className={styles.breadCrumbContainer}>
         <Breadcrumb.Item
-          href="http://localhost:3000/home/workout"
           className={styles.breadCrumbItem}
+          onClick={handleNavigateToWorkout}
         >
           Workout
         </Breadcrumb.Item>
-        <Breadcrumb.Item
-          href="http://localhost:3000/home/workout/routine/create"
-          className={styles.breadCrumbItem}
-        >
-          Create Routine
-        </Breadcrumb.Item>
         <Breadcrumb.Item active className={styles.breadCrumbItem}>
-          Add Exercise
+          Add Exercises
         </Breadcrumb.Item>
       </Breadcrumb>
       <Row className={styles.subTitleRow}>
-        <div className={`logoFont ${styles.subTitletext}`}>Add Exercise</div>
+        <div className={`logoFont ${styles.subTitletext}`}>Add Exercises</div>
         <button
           className={styles.subTitleButton}
           onClick={handleNavigateToCreateRoutine}
+          disabled={selectedExercises.length === 0}
         >
-          Add Exercise
+          Next
         </button>
       </Row>
       <Row className={styles.searchRow}>
