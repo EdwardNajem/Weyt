@@ -1,7 +1,8 @@
 import React, { useCallback } from "react";
 import { Row, Col } from "react-bootstrap";
-import styles from "./WorkoutHome.module.css";
 import { useNavigate } from "react-router-dom";
+
+import styles from "./WorkoutHome.module.css";
 
 const WorkoutHome: React.FC = () => {
   const navigate = useNavigate();

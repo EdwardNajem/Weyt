@@ -1,10 +1,10 @@
-import { Breadcrumb, Col, Row, FormControl } from "react-bootstrap";
+import { Breadcrumb, Col, Row, ListGroup } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
-import styles from "./AddExercise.module.css";
 import React, { useState, useEffect, useCallback } from "react";
+
 import instance from "../../../../Helper/axiosinstance";
-import ListGroup from "react-bootstrap/ListGroup";
-import Button from "react-bootstrap/Button";
+
+import styles from "./AddExercise.module.css";
 
 type Exercise = {
   name: string;
@@ -58,11 +58,11 @@ const AddExercise: React.FC = () => {
         state: { selectedExercises },
       });
     }
-  }, [selectedExercises]);
+  }, [selectedExercises, navigate]);
 
   const handleNavigateToWorkout = useCallback(() => {
     navigate("/home/workout");
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     fetchExercises();

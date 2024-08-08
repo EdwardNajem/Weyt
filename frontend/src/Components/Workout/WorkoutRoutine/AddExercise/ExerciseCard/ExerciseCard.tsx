@@ -1,6 +1,8 @@
 import React from "react";
+
 import { FaTrashAlt } from "react-icons/fa";
 import { TiDeleteOutline } from "react-icons/ti";
+
 import styles from "./ExerciseCard.module.css";
 
 type Set = {

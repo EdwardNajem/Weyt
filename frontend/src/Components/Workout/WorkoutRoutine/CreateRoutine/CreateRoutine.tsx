@@ -1,8 +1,11 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Breadcrumb, Col, Row } from "react-bootstrap";
-import styles from "./CreateRoutine.module.css";
+
+import instance from "../../../../Helper/axiosinstance";
 import ExerciseCard from "../AddExercise/ExerciseCard/ExerciseCard";
+
+import styles from "./CreateRoutine.module.css";
 
 type Exercise = {
   name: string;
@@ -24,6 +27,7 @@ type ExerciseWithSets = Exercise & {
 const CreateRoutine: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const inputTitleRef = useRef<HTMLInputElement>(null);
   const [selectedExercises, setSelectedExercises] = useState<
     ExerciseWithSets[]
   >(
@@ -38,11 +42,11 @@ const CreateRoutine: React.FC = () => {
 
   const handleNavigateToWorkout = useCallback(() => {
     navigate("/home/workout");
-  }, []);
+  }, [navigate]);
 
-  const handleNavigateAddExercise = () => {
+  const handleNavigateAddExercise = useCallback(() => {
     navigate("/home/workout/routine/addexercise");
-  };
+  }, [navigate]);
 
   const handleRemoveExercise = (index: number) => {
     setSelectedExercises((prevExercises) =>
@@ -96,6 +100,34 @@ const CreateRoutine: React.FC = () => {
     );
   };
 
+  const handleCreateWorkoutRoutine = useCallback(() => {
+    const data = {
+      title: inputTitleRef.current!.value,
+      userId: 11,
+      workout: [
+        {
+          exerciseId: 5,
+          exerciseSet: [
+            {
+              reps: 12,
+              weight: 20,
+              duration: "string",
+              number: 1,
+            },
+            {
+              reps: 12,
+              weight: 20,
+              duration: "string",
+              number: 2,
+            },
+          ],
+        },
+      ],
+    };
+    const response = instance.post("api/Workout/CreateWorkoutRoutine", data);
+    console.log(response);
+  }, []);
+
   return (
     <Col className={styles.mainColumn}>
       <Breadcrumb className={styles.breadCrumbContainer}>
@@ -121,8 +153,14 @@ const CreateRoutine: React.FC = () => {
           type="text"
           placeholder="Title"
           className={`form-control ${styles.titleInput}`}
+          ref={inputTitleRef}
         />
-        <button className={styles.subTitleButton}>Create</button>
+        <button
+          className={styles.subTitleButton}
+          onClick={handleCreateWorkoutRoutine}
+        >
+          Create
+        </button>
       </Row>
       <div>
         <h4 className={styles.selectedExercisesTitle}>Selected Exercises:</h4>

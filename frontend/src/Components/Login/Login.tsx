@@ -99,7 +99,6 @@ const Login = () => {
   return (
     <Container fluid className={styles.mainContainer}>
       <Row className={`mx-0 my-0 ${styles.mainRow}`}>
-        {/* Form Column */}
         <Col className={styles.loginColumn} lg={6} xs={12}>
           <div className={styles.mainColumn}>
             <h2 className="logoFont">Weyt</h2>
