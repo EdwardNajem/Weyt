@@ -1,6 +1,8 @@
 import React, { useCallback, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Breadcrumb, Col, Row } from "react-bootstrap";
+import { jwtDecode } from "jwt-decode";
+import secureLocalStorage from "react-secure-storage";
 
 import instance from "../../../../Helper/axiosinstance";
 import ExerciseCard from "../AddExercise/ExerciseCard/ExerciseCard";
@@ -8,6 +10,7 @@ import ExerciseCard from "../AddExercise/ExerciseCard/ExerciseCard";
 import styles from "./CreateRoutine.module.css";
 
 type Exercise = {
+  id: number;
   name: string;
   primaryMuscle: string;
   type: string;
@@ -24,7 +27,23 @@ type ExerciseWithSets = Exercise & {
   sets: Set[];
 };
 
+type WorkoutRoutineData = {
+  title: string;
+  userEmail: string;
+  workout: {
+    exerciseId: number;
+    exerciseSet: {
+      reps?: number;
+      weight?: number;
+      duration?: string;
+      number: number;
+    }[];
+  }[];
+};
+
 const CreateRoutine: React.FC = () => {
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<Boolean>(false);
   const navigate = useNavigate();
   const location = useLocation();
   const inputTitleRef = useRef<HTMLInputElement>(null);
@@ -100,33 +119,60 @@ const CreateRoutine: React.FC = () => {
     );
   };
 
-  const handleCreateWorkoutRoutine = useCallback(() => {
-    const data = {
-      title: inputTitleRef.current!.value,
-      userId: 11,
-      workout: [
-        {
-          exerciseId: 5,
-          exerciseSet: [
-            {
-              reps: 12,
-              weight: 20,
-              duration: "string",
-              number: 1,
-            },
-            {
-              reps: 12,
-              weight: 20,
-              duration: "string",
-              number: 2,
-            },
-          ],
-        },
-      ],
+  const handleCreateWorkoutRoutine = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+
+    const title = inputTitleRef.current?.value.trim() || "";
+
+    if (!title) {
+      setError("Title cannot be empty.");
+      setLoading(false);
+      return;
+    }
+
+    if (selectedExercises.some((exercise) => exercise.sets.length === 0)) {
+      setError("Each exercise must have at least one set.");
+      setLoading(false);
+      return;
+    }
+
+    const token = secureLocalStorage.getItem("token") as string;
+    const decodedToken: any = jwtDecode(token);
+    const userEmail: string = decodedToken.Name;
+
+    const workoutData: WorkoutRoutineData = {
+      title,
+      userEmail,
+      workout: selectedExercises.map((exercise) => ({
+        exerciseId: exercise.id,
+        exerciseSet: exercise.sets.map((set, index) => ({
+          reps: set.reps,
+          weight: set.weight,
+          duration: set.time,
+          number: index + 1,
+        })),
+      })),
     };
-    const response = instance.post("api/Workout/CreateWorkoutRoutine", data);
-    console.log(response);
-  }, []);
+    console.log("Posting workout data:", workoutData);
+
+    try {
+      const response = await instance.post(
+        "api/Workout/CreateWorkoutRoutine",
+        workoutData
+      );
+      console.log("Response:", response.data);
+      navigate("/home/workout");
+    } catch (error: any) {
+      console.error(
+        "Error creating workout routine:",
+        error.response?.data || error.message
+      );
+      setError("Failed to create workout routine. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }, [selectedExercises]);
 
   return (
     <Col className={styles.mainColumn}>
@@ -154,14 +200,17 @@ const CreateRoutine: React.FC = () => {
           placeholder="Title"
           className={`form-control ${styles.titleInput}`}
           ref={inputTitleRef}
+          disabled={loading === true}
         />
         <button
           className={styles.subTitleButton}
           onClick={handleCreateWorkoutRoutine}
+          disabled={loading === true}
         >
           Create
         </button>
       </Row>
+      {error && <div className={styles.errorMessage}>{error}</div>}
       <div>
         <h4 className={styles.selectedExercisesTitle}>Selected Exercises:</h4>
         <div className={styles.selectedExercisesList}>

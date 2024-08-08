@@ -112,12 +112,3 @@ input:-webkit-autofill:active {
   color: var(--TextColor);
   margin-top: 1rem;
 }
-
-/* .selectedExercisesList {
-  max-height: 60vh;
-  overflow-y: auto;
-}
-
-.selectedExercisesList::-webkit-scrollbar {
-  display: none;
-} */

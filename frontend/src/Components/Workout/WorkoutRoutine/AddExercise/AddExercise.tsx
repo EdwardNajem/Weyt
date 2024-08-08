@@ -7,6 +7,7 @@ import instance from "../../../../Helper/axiosinstance";
 import styles from "./AddExercise.module.css";
 
 type Exercise = {
+  id: number;
   name: string;
   primaryMuscle: string;
   type: string;

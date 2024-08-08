@@ -13,6 +13,7 @@ type Set = {
 
 type ExerciseProps = {
   exercise: {
+    id: number;
     name: string;
     primaryMuscle: string;
     type: string;
