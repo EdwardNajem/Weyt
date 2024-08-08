@@ -12,10 +12,12 @@ namespace WeytBackend.Application.Services
     public class WorkoutServices : IWorkoutServices
     {
         private readonly IWorkoutRepository _workoutRepository;
+        private readonly IUserRepository _userRepository;
 
-        public WorkoutServices(IWorkoutRepository workoutRepository)
+        public WorkoutServices(IWorkoutRepository workoutRepository, IUserRepository userRepository)
         {
             _workoutRepository = workoutRepository;
+            _userRepository = userRepository;   
         }
 
         public async Task<IEnumerable<Exercise>> GetAllExercises()
@@ -25,7 +27,10 @@ namespace WeytBackend.Application.Services
 
         public async Task CreateWorkoutRoutine(CreateWorkoutRoutineDTO createWorkoutRoutineDTO)
         {
-            var workoutRoutineId = await _workoutRepository.CreateWorkoutRoutine(createWorkoutRoutineDTO.Title, createWorkoutRoutineDTO.UserId);
+
+            User user = await _userRepository.Login(createWorkoutRoutineDTO.UserEmail);
+
+            var workoutRoutineId = await _workoutRepository.CreateWorkoutRoutine(createWorkoutRoutineDTO.Title, user.Id);
 
             foreach (CreateWorkoutDTO workoutDTO in createWorkoutRoutineDTO.Workout)
             {
