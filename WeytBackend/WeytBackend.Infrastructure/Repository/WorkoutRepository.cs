@@ -10,6 +10,9 @@ namespace WeytBackend.Infrastructure.Repository
         public Task<int> CreateWorkoutRoutine(string title, int userId);
         public Task<int> CreateWorkout(int workoutRoutineId, int exerciseId);
         public Task CreateExerciseSet(int reps, double weight, string duration, int workoutId, int setNumber);
+        public Task<IEnumerable<WorkoutRoutine>> GetAllWorkoutRoutines(int userId);
+        public Task<IEnumerable<Workout>> GetAllWorkouts(int workoutRoutineId);
+        public Task<IEnumerable<ExerciseSet>> GetAllSets(int workoutId);
     }
     public class WorkoutRepository(string connectionString) : IWorkoutRepository
     {
@@ -45,6 +48,27 @@ namespace WeytBackend.Infrastructure.Repository
             string createExerciseSetSql = @"INSERT INTO public.""ExerciseSet"" (""Reps"", ""Weight"", ""Duration"", ""Date"", ""WorkoutId"", ""Number"") values (@Reps, @Weight, @Duration, @Date, @WorkoutId, @Number)";
             using var dbConnection = CreateConnection();
              await dbConnection.ExecuteAsync(createExerciseSetSql, new { Reps = reps, Weight = weight, Duration = duration, Date = DateTime.Now, WorkoutId = workoutId, Number = setNumber });
+        }
+
+        public async Task<IEnumerable<WorkoutRoutine>> GetAllWorkoutRoutines(int userId)
+        {
+            string getAllRountinesSql = @"SELECT * from public.""WorkoutRoutine"" where ""UserId"" = @UserId";
+            using var dbConnection = CreateConnection();
+            return await dbConnection.QueryAsync<WorkoutRoutine> (getAllRountinesSql, new { UserId = userId });
+        }
+
+        public async Task<IEnumerable<Workout>> GetAllWorkouts(int workoutRoutineId)
+        {
+            string getAllWorkoutSql = @"SELECT * from public.""Workout"" where ""WorkoutRountineId"" = @WorkoutRountineId";
+            using var dbConnection = CreateConnection();
+            return await dbConnection.QueryAsync<Workout> (getAllWorkoutSql, new { WorkoutRoutineId = workoutRoutineId });
+        }
+
+        public async Task<IEnumerable<ExerciseSet>> GetAllSets(int workoutId)
+        {
+            string getAllSetsSql = @"SELECT * from public.""ExerciseSet"" where ""WorkoutId"" = @WorkoutId";
+            using var dbConnection = CreateConnection();
+            return await dbConnection.QueryAsync<ExerciseSet>(getAllSetsSql, new { WorkoutId = workoutId });
         }
     }
 }

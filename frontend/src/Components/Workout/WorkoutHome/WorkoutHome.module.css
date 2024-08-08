@@ -16,27 +16,28 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  margin-bottom: 1rem;
 }
 
 .subTitleRow > * {
-  width: 0%;
+  width: 0 !important ;
 }
 
 .subTitletext {
   margin-left: 2rem;
   font-size: 1.5rem;
   user-select: none;
+  text-wrap: nowrap;
 }
 
 .subTitleButton {
-  width: fit-content;
+  width: 10rem !important;
   height: 2.5rem;
   background-color: var(--ButtonBackground);
   border: 1px solid var(--ButtonBackground);
   border-color: var(--ButtonBackground);
   border-radius: 0.5rem;
   color: var(--TextColor);
-  margin-top: 1rem;
   transition: all 0.5s;
 }
 

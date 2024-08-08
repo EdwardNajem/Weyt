@@ -8,6 +8,8 @@ namespace WeytBackend.Application.Services
     {
         public Task<IEnumerable<Exercise>> GetAllExercises();
         public Task CreateWorkoutRoutine(CreateWorkoutRoutineDTO createWorkoutRoutineDTO);
+
+        public Task<IEnumerable<WorkoutRoutine>> GetAllWorkoutRoutines(GetAllWorkoutRoutineDTO getAllWorkoutRoutineDTO);
     }
     public class WorkoutServices : IWorkoutServices
     {
@@ -27,7 +29,6 @@ namespace WeytBackend.Application.Services
 
         public async Task CreateWorkoutRoutine(CreateWorkoutRoutineDTO createWorkoutRoutineDTO)
         {
-
             User user = await _userRepository.Login(createWorkoutRoutineDTO.UserEmail);
 
             var workoutRoutineId = await _workoutRepository.CreateWorkoutRoutine(createWorkoutRoutineDTO.Title, user.Id);
@@ -41,8 +42,13 @@ namespace WeytBackend.Application.Services
                     await _workoutRepository.CreateExerciseSet(exerciseSetDTO.Reps, exerciseSetDTO.Weight, exerciseSetDTO.Duration!, workoutId, exerciseSetDTO.Number);
                 }
             }
+        }
 
+        public async Task<IEnumerable<WorkoutRoutine>> GetAllWorkoutRoutines(GetAllWorkoutRoutineDTO getAllWorkoutRoutineDTO)
+        {
+            User user = await _userRepository.Login(getAllWorkoutRoutineDTO.Email);
 
+            return await _workoutRepository.GetAllWorkoutRoutines(user.Id);
         }
     }
 }
