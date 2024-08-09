@@ -74,6 +74,36 @@
   /* opacity: 0; */
 }
 
+.searchContainer {
+  display: flex;
+  align-items: center;
+}
+
+.titleInput {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.clearButton {
+  width: 10rem !important;
+  height: 100%;
+  padding: 10px;
+  background-color: var(--ButtonBackground) !important;
+  border: 1px solid var(--ButtonBackground) !important;
+  border-radius: 0.5rem;
+  color: var(--TextColor) !important;
+  transition: all 0.5s !important;
+}
+
+.clearButton:hover {
+  background-color: var(--ButtonHoverBackground) !important;
+  border-color: var(--ButtonHoverBackground) !important;
+}
+
+.clearButton:hover {
+  box-shadow: none !important;
+}
+
 .titleInputText {
   color: var(--TextColor);
 }
@@ -174,4 +204,11 @@ input:-webkit-autofill:active {
 
 .addButton {
   margin-left: auto;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
 }

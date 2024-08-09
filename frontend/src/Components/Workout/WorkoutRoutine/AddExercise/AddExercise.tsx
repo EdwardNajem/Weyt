@@ -2,6 +2,7 @@ import { Breadcrumb, Col, Row, ListGroup } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import React, { useState, useEffect, useCallback } from "react";
 
+import Loading from "../../../Loading/Loading";
 import instance from "../../../../Helper/axiosinstance";
 
 import styles from "./AddExercise.module.css";
@@ -24,34 +25,45 @@ const AddExercise: React.FC = () => {
   const [selectedExercises, setSelectedExercises] = useState<Exercise[]>(
     initialSelectedExercises
   );
+  const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const fetchExercises = () => {
+  const fetchExercises = useCallback(() => {
     instance
       .get("/api/Workout/getAllExercises")
       .then((response) => {
         setExercises(response.data);
       })
-      .catch((error) => {
-        console.error("Error fetching exercises:", error);
+      .catch(() => {
+        setError("Failed to Load Exercises");
       })
       .finally(() => {
         setLoading(false);
       });
-  };
+  }, []);
 
-  const handleAddRemoveExercise = (exercise: Exercise) => {
-    setSelectedExercises((prevSelected) =>
-      prevSelected.includes(exercise)
-        ? prevSelected.filter((ex) => ex !== exercise)
-        : [...prevSelected, exercise]
-    );
-  };
+  const handleAddRemoveExercise = useCallback(
+    (exercise: Exercise) => {
+      setSelectedExercises((prevSelected) =>
+        prevSelected.includes(exercise)
+          ? prevSelected.filter((ex) => ex !== exercise)
+          : [...prevSelected, exercise]
+      );
+    },
+    [setSelectedExercises]
+  );
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
-  };
+  const handleSearchChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchQuery(event.target.value);
+    },
+    []
+  );
+
+  const handleClearSearch = useCallback(() => {
+    setSearchQuery("");
+  }, []);
 
   const handleNavigateToCreateRoutine = useCallback(() => {
     if (selectedExercises.length > 0) {
@@ -67,7 +79,7 @@ const AddExercise: React.FC = () => {
 
   useEffect(() => {
     fetchExercises();
-  }, []);
+  }, [fetchExercises]);
 
   const filteredExercises = exercises?.filter((exercise) =>
     exercise.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -97,15 +109,28 @@ const AddExercise: React.FC = () => {
         </button>
       </Row>
       <Row className={styles.searchRow}>
-        <input
-          type="text"
-          placeholder="Search for exercises..."
-          value={searchQuery}
-          onChange={handleSearchChange}
-          className={`form-control ${styles.titleInput}`}
-        />
+        <div className={styles.searchContainer}>
+          <input
+            type="text"
+            placeholder="Search for exercises..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+            className={`form-control ${styles.titleInput}`}
+          />
+          <button
+            onClick={handleClearSearch}
+            className={`form-control ${styles.clearButton}`}
+          >
+            Clear
+          </button>
+        </div>
       </Row>
-      {loading ? null : (
+      {error && <div className={styles.errorMessage}>{error}</div>}
+      {loading ? (
+        <div className={styles.loadingContainer}>
+          <Loading />
+        </div>
+      ) : (
         <ListGroup as="ol" variant="dark" className={`${styles.exerciseList}`}>
           {filteredExercises?.map((exercise, index) => (
             <ListGroup.Item

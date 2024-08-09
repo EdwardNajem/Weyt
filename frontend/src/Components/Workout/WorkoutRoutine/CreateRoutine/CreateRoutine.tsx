@@ -67,13 +67,13 @@ const CreateRoutine: React.FC = () => {
     navigate("/home/workout/routine/addexercise");
   }, [navigate]);
 
-  const handleRemoveExercise = (index: number) => {
+  const handleRemoveExercise = useCallback((index: number) => {
     setSelectedExercises((prevExercises) =>
       prevExercises.filter((_, i) => i !== index)
     );
-  };
+  }, []);
 
-  const handleAddSet = (exerciseIndex: number) => {
+  const handleAddSet = useCallback((exerciseIndex: number) => {
     setSelectedExercises((prevExercises) =>
       prevExercises.map((exercise, index) =>
         index === exerciseIndex
@@ -84,40 +84,62 @@ const CreateRoutine: React.FC = () => {
           : exercise
       )
     );
-  };
+  }, []);
 
-  const handleRemoveSet = (exerciseIndex: number, setIndex: number) => {
-    setSelectedExercises((prevExercises) =>
-      prevExercises.map((exercise, index) =>
-        index === exerciseIndex
-          ? {
-              ...exercise,
-              sets: exercise.sets.filter((_, i) => i !== setIndex),
-            }
-          : exercise
-      )
-    );
-  };
+  const handleRemoveSet = useCallback(
+    (exerciseIndex: number, setIndex: number) => {
+      setSelectedExercises((prevExercises) =>
+        prevExercises.map((exercise, index) =>
+          index === exerciseIndex
+            ? {
+                ...exercise,
+                sets: exercise.sets.filter((_, i) => i !== setIndex),
+              }
+            : exercise
+        )
+      );
+    },
+    []
+  );
 
-  const handleSetChange = (
-    exerciseIndex: number,
-    setIndex: number,
-    field: string,
-    value: string | number
-  ) => {
-    setSelectedExercises((prevExercises) =>
-      prevExercises.map((exercise, eIndex) =>
-        eIndex === exerciseIndex
-          ? {
-              ...exercise,
-              sets: exercise.sets.map((set, sIndex) =>
-                sIndex === setIndex ? { ...set, [field]: value } : set
-              ),
-            }
-          : exercise
-      )
-    );
-  };
+  const handleSetChange = useCallback(
+    (
+      exerciseIndex: number,
+      setIndex: number,
+      field: string,
+      value: string | number
+    ) => {
+      if (field === "reps" || field === "weight") {
+        if (typeof value === "number" && value < 0) {
+          setError(`${field} cannot be negative.`);
+          return;
+        }
+      }
+
+      if (field === "time") {
+        const timeRegex = /^([0-5][0-9]):([0-5][0-9])$/;
+        if (!timeRegex.test(value as string)) {
+          setError("Time must be in MM:SS format.");
+          return;
+        }
+      }
+
+      setSelectedExercises((prevExercises) =>
+        prevExercises.map((exercise, eIndex) =>
+          eIndex === exerciseIndex
+            ? {
+                ...exercise,
+                sets: exercise.sets.map((set, sIndex) =>
+                  sIndex === setIndex ? { ...set, [field]: value } : set
+                ),
+              }
+            : exercise
+        )
+      );
+      setError(null);
+    },
+    []
+  );
 
   const handleCreateWorkoutRoutine = useCallback(async () => {
     setLoading(true);
@@ -154,20 +176,14 @@ const CreateRoutine: React.FC = () => {
         })),
       })),
     };
-    console.log("Posting workout data:", workoutData);
 
     try {
       const response = await instance.post(
         "api/Workout/CreateWorkoutRoutine",
         workoutData
       );
-      console.log("Response:", response.data);
       navigate("/home/workout");
     } catch (error: any) {
-      console.error(
-        "Error creating workout routine:",
-        error.response?.data || error.message
-      );
       setError("Failed to create workout routine. Please try again.");
     } finally {
       setLoading(false);

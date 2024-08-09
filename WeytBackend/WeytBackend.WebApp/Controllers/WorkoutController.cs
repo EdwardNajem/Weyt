@@ -32,7 +32,7 @@ namespace WeytBackend.WebApp.Controllers
             return Ok();
         }
 
-        [HttpPost("getAllWorkoutRountines")]
+        [HttpPost("getAllWorkoutRoutines")]
         public async Task<IActionResult> GettAllWorkoutRoutines(GetAllWorkoutRoutineDTO getAllWorkoutRoutineDTO)
         {
             IEnumerable<WorkoutRoutine> workoutRoutine = await _workoutServices.GetAllWorkoutRoutines(getAllWorkoutRoutineDTO);

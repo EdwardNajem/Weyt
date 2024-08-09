@@ -1,0 +1,32 @@
+.card {
+  margin-bottom: 1rem;
+  background-color: var(--InputBackground) !important;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: start;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.startButton {
+  width: 10rem !important;
+  height: 2.5rem;
+  background-color: var(--ButtonBackground);
+  border: 1px solid var(--ButtonBackground);
+  border-color: var(--ButtonBackground);
+  border-radius: 0.5rem;
+  color: var(--TextColor);
+  transition: all 0.5s;
+  margin-left: auto;
+}
+
+.startButton:hover {
+  background-color: var(--ButtonHoverBackground);
+  border-color: var(--ButtonHoverBackground);
+}
+
+.startButton:active {
+  background-color: var(--BackgroundColor);
+}
