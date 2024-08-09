@@ -38,5 +38,12 @@ namespace WeytBackend.WebApp.Controllers
             IEnumerable<WorkoutRoutine> workoutRoutine = await _workoutServices.GetAllWorkoutRoutines(getAllWorkoutRoutineDTO);
             return Ok(workoutRoutine);
         }
+
+        [HttpDelete("DeleteWorkoutRoutine")]
+        public async Task<IActionResult> DeleteWorkoutRoutine(DeleteWorkoutRoutineDTO workoutRoutineDTO)
+        {
+            await _workoutServices.DeleteWorkoutRoutine(workoutRoutineDTO);
+            return Ok();
+        }
     }
 }

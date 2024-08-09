@@ -13,6 +13,9 @@ namespace WeytBackend.Infrastructure.Repository
         public Task<IEnumerable<WorkoutRoutine>> GetAllWorkoutRoutines(int userId);
         public Task<IEnumerable<Workout>> GetAllWorkouts(int workoutRoutineId);
         public Task<IEnumerable<ExerciseSet>> GetAllSets(int workoutId);
+        public Task DeleteWorkoutRoutine(int workoutRoutineId);
+        public Task DeleteWorkout(int workoutRoutineId);
+        public Task DeleteExerciseSet(int workoutId);
     }
     public class WorkoutRepository(string connectionString) : IWorkoutRepository
     {
@@ -47,21 +50,21 @@ namespace WeytBackend.Infrastructure.Repository
         {
             string createExerciseSetSql = @"INSERT INTO public.""ExerciseSet"" (""Reps"", ""Weight"", ""Duration"", ""Date"", ""WorkoutId"", ""Number"") values (@Reps, @Weight, @Duration, @Date, @WorkoutId, @Number)";
             using var dbConnection = CreateConnection();
-             await dbConnection.ExecuteAsync(createExerciseSetSql, new { Reps = reps, Weight = weight, Duration = duration, Date = DateTime.Now, WorkoutId = workoutId, Number = setNumber });
+            await dbConnection.ExecuteAsync(createExerciseSetSql, new { Reps = reps, Weight = weight, Duration = duration, Date = DateTime.Now, WorkoutId = workoutId, Number = setNumber });
         }
 
         public async Task<IEnumerable<WorkoutRoutine>> GetAllWorkoutRoutines(int userId)
         {
-            string getAllRountinesSql = @"SELECT * from public.""WorkoutRoutine"" where ""UserId"" = @UserId";
+            string getAllRoutinesSql = @"SELECT * from public.""WorkoutRoutine"" where ""UserId"" = @UserId";
             using var dbConnection = CreateConnection();
-            return await dbConnection.QueryAsync<WorkoutRoutine> (getAllRountinesSql, new { UserId = userId });
+            return await dbConnection.QueryAsync<WorkoutRoutine>(getAllRoutinesSql, new { UserId = userId });
         }
 
         public async Task<IEnumerable<Workout>> GetAllWorkouts(int workoutRoutineId)
         {
-            string getAllWorkoutSql = @"SELECT * from public.""Workout"" where ""WorkoutRountineId"" = @WorkoutRountineId";
+            string getAllWorkoutSql = @"SELECT * from public.""Workout"" where ""WorkoutRoutineId"" = @WorkoutRoutineId";
             using var dbConnection = CreateConnection();
-            return await dbConnection.QueryAsync<Workout> (getAllWorkoutSql, new { WorkoutRoutineId = workoutRoutineId });
+            return await dbConnection.QueryAsync<Workout>(getAllWorkoutSql, new { WorkoutRoutineId = workoutRoutineId });
         }
 
         public async Task<IEnumerable<ExerciseSet>> GetAllSets(int workoutId)
@@ -70,5 +73,24 @@ namespace WeytBackend.Infrastructure.Repository
             using var dbConnection = CreateConnection();
             return await dbConnection.QueryAsync<ExerciseSet>(getAllSetsSql, new { WorkoutId = workoutId });
         }
+        public async Task DeleteWorkoutRoutine(int workoutRoutineId)
+        {
+            string DeleteWorkoutRoutine = @"Delete from public.""WorkoutRoutine"" where ""Id"" = @WorkoutRoutineId";
+            using var dbConnection = CreateConnection();
+            await dbConnection.ExecuteAsync(DeleteWorkoutRoutine, new { WorkoutRoutineId = workoutRoutineId });
+        }
+        public async Task DeleteWorkout(int workoutRoutineId)
+        {
+            string DeleteWorkout = @"Delete from public.""Workout"" where ""WorkoutRoutineId"" = @WorkoutRoutineId";
+            using var dbConnection = CreateConnection();
+            await dbConnection.ExecuteAsync(DeleteWorkout, new { WorkoutRoutineId = workoutRoutineId });
+        }
+        public async Task DeleteExerciseSet(int workoutId)
+        {
+            string DeleteExerciseSet = @"Delete from public.""ExerciseSet"" where ""WorkoutId"" = @WorkoutId";
+            using var dbConnection = CreateConnection();
+            await dbConnection.ExecuteAsync(DeleteExerciseSet, new { WorkoutId = workoutId });
+        }
+
     }
 }

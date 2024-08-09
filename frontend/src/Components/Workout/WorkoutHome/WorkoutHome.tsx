@@ -47,9 +47,28 @@ const WorkoutHome: React.FC = () => {
     console.log("Edit routine with ID:", id);
   }, []);
 
-  const handleDelete = useCallback((id: number) => {
-    console.log("Delete routine with ID:", id);
-  }, []);
+  const handleDelete = useCallback(
+    async (workoutRoutineId: number) => {
+      try {
+        const response = await instance.delete(
+          `api/Workout/DeleteWorkoutRoutine`,
+          {
+            data: { workoutRoutineId },
+          }
+        );
+        console.log("Deleted response");
+
+        fetchWorkoutRoutines();
+      } catch (error: any) {
+        console.error(
+          "Error deleting workout routine:",
+          error.response?.data || error.message
+        );
+        setError("Failed to delete workout routine. Please try again.");
+      }
+    },
+    [fetchWorkoutRoutines]
+  );
 
   const handleStart = useCallback((id: number) => {
     console.log("Start routine with ID:", id);

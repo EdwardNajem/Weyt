@@ -8,8 +8,8 @@ namespace WeytBackend.Application.Services
     {
         public Task<IEnumerable<Exercise>> GetAllExercises();
         public Task CreateWorkoutRoutine(CreateWorkoutRoutineDTO createWorkoutRoutineDTO);
-
         public Task<IEnumerable<WorkoutRoutine>> GetAllWorkoutRoutines(GetAllWorkoutRoutineDTO getAllWorkoutRoutineDTO);
+        public Task DeleteWorkoutRoutine(DeleteWorkoutRoutineDTO deleteWorkoutRoutineDTO);
     }
     public class WorkoutServices : IWorkoutServices
     {
@@ -19,7 +19,7 @@ namespace WeytBackend.Application.Services
         public WorkoutServices(IWorkoutRepository workoutRepository, IUserRepository userRepository)
         {
             _workoutRepository = workoutRepository;
-            _userRepository = userRepository;   
+            _userRepository = userRepository;
         }
 
         public async Task<IEnumerable<Exercise>> GetAllExercises()
@@ -30,13 +30,10 @@ namespace WeytBackend.Application.Services
         public async Task CreateWorkoutRoutine(CreateWorkoutRoutineDTO createWorkoutRoutineDTO)
         {
             User user = await _userRepository.Login(createWorkoutRoutineDTO.UserEmail);
-
             var workoutRoutineId = await _workoutRepository.CreateWorkoutRoutine(createWorkoutRoutineDTO.Title, user.Id);
-
             foreach (CreateWorkoutDTO workoutDTO in createWorkoutRoutineDTO.Workout)
             {
                 int workoutId = await _workoutRepository.CreateWorkout(workoutRoutineId, workoutDTO.ExerciseId);
-
                 foreach (CreateExerciseSetDTO exerciseSetDTO in workoutDTO.ExerciseSet)
                 {
                     await _workoutRepository.CreateExerciseSet(exerciseSetDTO.Reps, exerciseSetDTO.Weight, exerciseSetDTO.Duration!, workoutId, exerciseSetDTO.Number);
@@ -47,8 +44,19 @@ namespace WeytBackend.Application.Services
         public async Task<IEnumerable<WorkoutRoutine>> GetAllWorkoutRoutines(GetAllWorkoutRoutineDTO getAllWorkoutRoutineDTO)
         {
             User user = await _userRepository.Login(getAllWorkoutRoutineDTO.Email);
-
             return await _workoutRepository.GetAllWorkoutRoutines(user.Id);
+        }
+
+        public async Task DeleteWorkoutRoutine(DeleteWorkoutRoutineDTO deleteWorkoutRoutineDTO)
+        {
+            IEnumerable<Workout> workouts = await _workoutRepository.GetAllWorkouts(deleteWorkoutRoutineDTO.WorkoutRoutineId);
+            foreach (Workout workout in workouts)
+            {
+                await _workoutRepository.DeleteExerciseSet(workout.Id);
+
+            }
+            await _workoutRepository.DeleteWorkout(deleteWorkoutRoutineDTO.WorkoutRoutineId);
+            await _workoutRepository.DeleteWorkoutRoutine(deleteWorkoutRoutineDTO.WorkoutRoutineId);
         }
     }
 }
